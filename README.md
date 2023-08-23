@@ -1,2 +1,2 @@
-# Example
-An example greeter plugin
+# Farming Patch Overlay
+Displays colored overlays on various patches as a reminder.
