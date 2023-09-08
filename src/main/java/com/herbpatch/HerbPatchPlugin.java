@@ -42,6 +42,11 @@ public class HerbPatchPlugin extends Plugin {
 		overlayManager.add(herbOverlay);
 	}
 
+	@Override
+	protected void shutDown() {
+		herbPatchObject = null;
+	}
+
 	@Subscribe
 	public void onGameObjectSpawned(GameObjectSpawned event) {
 		// Check if any spawned objects are herbs/patches
