@@ -11,14 +11,24 @@ Detailed instructions on how to achieve this can be found on the [RuneLite wiki]
 
 ## Configuration
 
+Plugin settings are found in the RuneLite plugin configuration panel.
+
+| Option                   | Description                                       |
+|--------------------------|---------------------------------------------------|
+| Herb Overlay Color       | Section where user can set custom overlay colors. |
+| Render overgrown overlay | Render overlay on overgrown herb patches.         |
+| Render empty overlay     | Render overlay on empty herb patches.             |
+
 ### Default colors
 
-| Herb         |    Hex    |                                              Color                                               |
-|:-------------|:---------:|:------------------------------------------------------------------------------------------------:|
-| Empty / Dead | `#FF0000` | <div style="display: inline-block; width: 20px; height: 20px; background-color: #FF0000;"></div> |
-| Diseased     | `#FF00FF` | <div style="display: inline-block; width: 20px; height: 20px; background-color: #FF00FF;"></div> |
-| Unripe       | `#FFFF00` | <div style="display: inline-block; width: 20px; height: 20px; background-color: #FFFF00;"></div> |
-| Mature       | `#00FF00` | <div style="display: inline-block; width: 20px; height: 20px; background-color: #00FF00;"></div> |
+| Herb      |    Hex    |                        Color                         |
+|:----------|:---------:|:----------------------------------------------------:|
+| Overgrown | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
+| Empty     | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
+| Unripe    | `#FFFF00` | ![#FFFF00](https://placehold.co/15x15/FFFF00/FFFF00) |
+| Mature    | `#00FF00` | ![#00FF00](https://placehold.co/15x15/00FF00/00FF00) |
+| Diseased  | `#FF00FF` | ![#FF00FF](https://placehold.co/15x15/FF00FF/FF00FF) |
+| Dead      | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
 
 ## Development
 

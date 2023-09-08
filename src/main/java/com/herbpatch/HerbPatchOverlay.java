@@ -7,6 +7,7 @@ import net.runelite.api.GameObject;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.client.ui.overlay.Overlay;
+import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.OverlayPriority;
 
@@ -26,11 +27,15 @@ public class HerbPatchOverlay extends Overlay {
     private final HerbPatchPlugin plugin;
 
     @Inject
+    private HerbPatchConfig config;
+
+    @Inject
     private HerbPatchOverlay(Client client, HerbPatchPlugin plugin) {
         this.plugin = plugin;
         this.client = client;
         setPosition(OverlayPosition.DYNAMIC);
         setPriority(OverlayPriority.LOW);
+        setLayer(OverlayLayer.ABOVE_SCENE);
     }
 
     @Override
@@ -39,10 +44,9 @@ public class HerbPatchOverlay extends Overlay {
         if (Objects.isNull(patchObject)) {
             return null;
         }
-        int state;
+        int state = -1;
 
-        // Switch to see what patch is rendered
-        // Some patch uses different transmog controllers
+        // Switch to see what patch is rendered as some patches uses different transmog controllers
         switch (patchObject.getId()) {
             case HerbPatchConstants.FALADOR:
             case HerbPatchConstants.PHASMATYS:
@@ -50,23 +54,27 @@ public class HerbPatchOverlay extends Overlay {
             case HerbPatchConstants.ARDOUGNE:
             case HerbPatchConstants.HOSIDIUS:
                 state = client.getVarbitValue(FARMING_4774);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.STRONGHOLD:
             case HerbPatchConstants.WEISS:
                 state = client.getVarbitValue(FARMING_4771);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.GUILD:
                 state = client.getVarbitValue(FARMING_4775);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.HARMONY:
                 state = client.getVarbitValue(FARMING_4772);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             default:
                 break;
+        }
+
+        // If state is not default and user wants to render for current state -> render overlay
+        if (state != -1) {
+            Color color = getHerbOverlayColor(state);
+            if (!Objects.isNull(color)) {
+                drawOverlay(patchObject, graphics, color);
+            }
         }
 
         return null;
@@ -89,12 +97,12 @@ public class HerbPatchOverlay extends Overlay {
 
         // Check if herb patch is within set max distance
         if (localLocation.distanceTo(herbLocation) <= MAX_DISTANCE) {
-            // Get convex hull of herb
+            // Overlay shape
             Shape objectConvexHull = object.getConvexHull();
 
             if (objectConvexHull != null) {
                 if (objectConvexHull.contains(mousePosition.getX(), mousePosition.getY())) {
-                    // Darken color if player is hovering herb
+                    // Darken color if pointer is hovering herb
                     graphics.setColor(color.darker());
                 } else {
                     graphics.setColor(color);
@@ -115,14 +123,27 @@ public class HerbPatchOverlay extends Overlay {
      * @see HerbPatchStages
      */
     private Color getHerbOverlayColor(int state) {
-        if (HerbPatchStages.EMPTY.contains(state) || HerbPatchStages.DEAD.contains(state) || HerbPatchStages.OVERGROWN.contains(state)) {
-            return Color.RED;
-        } else if (HerbPatchStages.GROWN.contains(state)) {
-            return Color.GREEN;
-        } else if (HerbPatchStages.DISEASED.contains(state)) {
-            return Color.MAGENTA;
-        } else {
-            return Color.YELLOW;
+        switch (HerbPatchStages.getHerbStage(state)) {
+            case OVERGROWN:
+                if (config.renderIfOvergrown()) {
+                    return config.overgrownColor();
+                }
+                return null;
+            case EMPTY:
+                if (config.renderIfEmpty()) {
+                    return config.emptyColor();
+                }
+                return null;
+            case GROWING:
+                return config.unripeColor();
+            case GROWN:
+                return config.matureColor();
+            case DISEASED:
+                return config.diseasedColor();
+            case DEAD:
+                return config.deadColor();
+            default:
+                return null;
         }
     }
 }

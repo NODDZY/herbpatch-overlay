@@ -1,5 +1,6 @@
 package com.herbpatch;
 
+import com.google.inject.Provides;
 import com.herbpatch.constants.HerbPatchConstants;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import net.runelite.api.GameObject;
 import net.runelite.api.GameState;
 import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -29,22 +31,32 @@ public class HerbPatchPlugin extends Plugin {
 	@Getter(AccessLevel.PACKAGE)
 	private GameObject herbPatchObject;
 
+	@Provides
+	HerbPatchConfig provideConfig(ConfigManager configManager) {
+		return configManager.getConfig(HerbPatchConfig.class);
+	}
+
 	@Override
 	protected void startUp() {
 		// Add HerbPatchOverlay to OverlayManager at start up
 		overlayManager.add(herbOverlay);
 	}
 
+	@Override
+	protected void shutDown() {
+		herbPatchObject = null;
+	}
+
 	@Subscribe
 	public void onGameObjectSpawned(GameObjectSpawned event) {
 		// Check if any spawned objects are herbs/patches
-		HerbPatchConstants.allHerbObjects.stream()
-			.filter(id -> id == event.getGameObject().getId())
-			.findFirst()
-			.ifPresent(value -> {
+		for (int id : HerbPatchConstants.allHerbObjects) {
+			if (id == event.getGameObject().getId()) {
 				herbPatchObject = event.getGameObject();
 				log.debug("Herb patch [" + herbPatchObject.getId() + "] spawned");
-			});
+				break;
+			}
+		}
 	}
 
 	@Subscribe
