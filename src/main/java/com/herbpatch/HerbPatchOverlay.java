@@ -44,10 +44,9 @@ public class HerbPatchOverlay extends Overlay {
         if (Objects.isNull(patchObject)) {
             return null;
         }
-        int state;
+        int state = -1;
 
-        // Switch to see what patch is rendered
-        // Some patches uses different transmog controllers
+        // Switch to see what patch is rendered as some patches uses different transmog controllers
         switch (patchObject.getId()) {
             case HerbPatchConstants.FALADOR:
             case HerbPatchConstants.PHASMATYS:
@@ -55,23 +54,27 @@ public class HerbPatchOverlay extends Overlay {
             case HerbPatchConstants.ARDOUGNE:
             case HerbPatchConstants.HOSIDIUS:
                 state = client.getVarbitValue(FARMING_4774);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.STRONGHOLD:
             case HerbPatchConstants.WEISS:
                 state = client.getVarbitValue(FARMING_4771);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.GUILD:
                 state = client.getVarbitValue(FARMING_4775);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             case HerbPatchConstants.HARMONY:
                 state = client.getVarbitValue(FARMING_4772);
-                drawOverlay(patchObject, graphics, getHerbOverlayColor(state));
                 break;
             default:
                 break;
+        }
+
+        // If state is not default and user wants to render for current state -> render overlay
+        if (state != -1) {
+            Color color = getHerbOverlayColor(state);
+            if (!Objects.isNull(color)) {
+                drawOverlay(patchObject, graphics, color);
+            }
         }
 
         return null;
@@ -122,9 +125,15 @@ public class HerbPatchOverlay extends Overlay {
     private Color getHerbOverlayColor(int state) {
         switch (HerbPatchStages.getHerbStage(state)) {
             case OVERGROWN:
-                return config.overgrownColor();
+                if (config.renderIfOvergrown()) {
+                    return config.overgrownColor();
+                }
+                return null;
             case EMPTY:
-                return config.emptyColor();
+                if (config.renderIfEmpty()) {
+                    return config.emptyColor();
+                }
+                return null;
             case GROWING:
                 return config.unripeColor();
             case GROWN:

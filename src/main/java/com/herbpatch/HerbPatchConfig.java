@@ -81,4 +81,24 @@ public interface HerbPatchConfig extends Config {
     default Color deadColor() {
         return Color.RED;
     }
+
+    @ConfigItem(
+            keyName = "renderIfOvergrown",
+            name = "Render overgrown overlay",
+            description = "Render overlay on overgrown herb patches",
+            position = 1
+    )
+    default boolean renderIfOvergrown() {
+        return true;
+    }
+
+    @ConfigItem(
+            keyName = "renderIfEmpty",
+            name = "Render empty overlay",
+            description = "Render overlay on empty herb patches",
+            position = 2
+    )
+    default boolean renderIfEmpty() {
+        return true;
+    }
 }
