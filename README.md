@@ -1,6 +1,14 @@
-# Herb Patch Overlay
+<div style="text-align:center; margin-top:10px;">
+  <div style="margin-bottom:-15px">    
+    <img src="https://github.com/NODDZY/herbpatch-overlay/assets/40918636/5863b767-0a56-43a2-ad9d-5e04f8077947" alt="Herb Patch Overlay">
+  </div>
 
-Renders colored overlays on herb patches to easily see if herb is ready to be harvested.
+  <p>Renders colored overlays on herb patches to easily see if herb is ready to be harvested.</p>
+
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/NODDZY/herbpatch-overlay">
+  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/NODDZY/herbpatch-overlay">
+  <img alt="GitHub" src="https://img.shields.io/github/license/NODDZY/herbpatch-overlay">
+</div>
 
 ## Installation Instructions
 
