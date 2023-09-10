@@ -2,14 +2,10 @@ package com.herbpatch;
 
 import com.herbpatch.constants.HerbPatchConstants;
 import com.herbpatch.constants.HerbPatchStages;
-import net.runelite.api.Client;
-import net.runelite.api.GameObject;
+import net.runelite.api.*;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
-import net.runelite.client.ui.overlay.Overlay;
-import net.runelite.client.ui.overlay.OverlayLayer;
-import net.runelite.client.ui.overlay.OverlayPosition;
-import net.runelite.client.ui.overlay.OverlayPriority;
+import net.runelite.client.ui.overlay.*;
 
 import javax.inject.Inject;
 import java.awt.*;
@@ -22,7 +18,7 @@ import static net.runelite.api.Varbits.FARMING_4774; // Falador, Port Phasmatys,
 import static net.runelite.api.Varbits.FARMING_4775; // Farming Guild
 
 public class HerbPatchOverlay extends Overlay {
-    private static final int MAX_DISTANCE = 2350;
+    private static final int MAX_DISTANCE = 2500;
     private final Client client;
     private final HerbPatchPlugin plugin;
 
@@ -87,21 +83,32 @@ public class HerbPatchOverlay extends Overlay {
      * @param color Overlay main outline color
      */
     private void drawOverlay(GameObject object, Graphics2D graphics, Color color) {
-        // Get player location, herb patch location and mouse position
-        LocalPoint localLocation = client.getLocalPlayer().getLocalLocation();
-        if (Objects.isNull(localLocation)) {
+        // Get player location and herb patch location
+        LocalPoint herbLocation = object.getLocalLocation();
+        LocalPoint playerLocation = client.getLocalPlayer().getLocalLocation();
+        if (Objects.isNull(playerLocation)) {
             return;
         }
-        Point mousePosition = client.getMouseCanvasPosition();
-        LocalPoint herbLocation = object.getLocalLocation();
 
         // Check if herb patch is within set max distance
-        if (localLocation.distanceTo(herbLocation) <= MAX_DISTANCE) {
-            // Overlay shape
-            Shape objectConvexHull = object.getConvexHull();
+        if (playerLocation.distanceTo(herbLocation) <= MAX_DISTANCE) {
+            Shape herb;
+            // Set the overlay shape (object hull or tile)
+            switch (config.overlaySelector()) {
+                case TILE:
+                    herb = Perspective.getCanvasTilePoly(client, herbLocation, object.getPlane());
+                    break;
+                case HULL:
+                    herb = object.getConvexHull();
+                    break;
+                default:
+                    return;
+            }
 
-            if (objectConvexHull != null) {
-                if (objectConvexHull.contains(mousePosition.getX(), mousePosition.getY())) {
+            Point mousePosition = client.getMouseCanvasPosition();
+            if (herb != null) {
+                // Check if user is hovering the herb
+                if (herb.contains(mousePosition.getX(), mousePosition.getY())) {
                     // Darken color if pointer is hovering herb
                     graphics.setColor(color.darker());
                 } else {
@@ -109,9 +116,9 @@ public class HerbPatchOverlay extends Overlay {
                 }
 
                 // Render overlay
-                graphics.draw(objectConvexHull);
+                graphics.draw(herb);
                 graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 20));
-                graphics.fill(objectConvexHull);
+                graphics.fill(herb);
             }
         }
     }
