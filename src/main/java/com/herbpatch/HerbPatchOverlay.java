@@ -19,6 +19,7 @@ import static net.runelite.api.Varbits.FARMING_4775; // Farming Guild
 
 public class HerbPatchOverlay extends Overlay {
     private static final int MAX_DISTANCE = 2500;
+    private static final int FILL_ALPHA = 20;
     private final Client client;
     private final HerbPatchPlugin plugin;
 
@@ -117,7 +118,7 @@ public class HerbPatchOverlay extends Overlay {
 
                 // Render overlay
                 graphics.draw(herb);
-                graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 20));
+                graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), FILL_ALPHA));
                 graphics.fill(herb);
             }
         }
