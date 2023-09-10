@@ -23,9 +23,10 @@ Plugin settings are found in the RuneLite plugin configuration panel.
 
 | Option                   | Description                                       |
 |--------------------------|---------------------------------------------------|
-| Herb Overlay Color       | Section where user can set custom overlay colors. |
+| Overlay type             | User can select type of overlay (hull or tile).   |
 | Render overgrown overlay | Render overlay on overgrown herb patches.         |
 | Render empty overlay     | Render overlay on empty herb patches.             |
+| Herb Overlay Color       | Section where user can set custom overlay colors. |
 
 ### Default colors
 

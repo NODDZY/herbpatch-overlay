@@ -1,5 +1,6 @@
 package com.herbpatch;
 
+import lombok.AllArgsConstructor;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -9,10 +10,23 @@ import java.awt.*;
 
 @ConfigGroup("herbpatch-overlay")
 public interface HerbPatchConfig extends Config {
+    @AllArgsConstructor
+    enum OverlayType {
+        HULL("Hull"),
+        TILE("Tile");
+
+        private final String value;
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+
     @ConfigSection(
             name = "Herb Overlay Color",
             description = "Custom overlay colors for herbs",
-            position = 0
+            position = 3
     )
     String customColorSection = "customColor";
 
@@ -80,6 +94,16 @@ public interface HerbPatchConfig extends Config {
     )
     default Color deadColor() {
         return Color.RED;
+    }
+
+    @ConfigItem(
+            keyName = "overlaySelector",
+            name = "Overlay type",
+            description = "Configure overlay type",
+            position = 0
+    )
+    default OverlayType overlaySelector() {
+        return OverlayType.HULL;
     }
 
     @ConfigItem(
