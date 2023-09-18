@@ -13,6 +13,7 @@ public interface HerbPatchConfig extends Config {
     @AllArgsConstructor
     enum OverlayType {
         HULL("Hull"),
+        OUTLINE("Outline"),
         TILE("Tile");
 
         private final String value;

@@ -6,6 +6,7 @@ import net.runelite.api.*;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.client.ui.overlay.*;
+import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
 
 import javax.inject.Inject;
 import java.awt.*;
@@ -20,16 +21,21 @@ import static net.runelite.api.Varbits.FARMING_4775; // Farming Guild
 public class HerbPatchOverlay extends Overlay {
     private static final int MAX_DISTANCE = 2500;
     private static final int FILL_ALPHA = 20;
+    private static final int OUTLINE_THICKNESS = 5;
+    private static final int OUTLINE_FEATHER = 4;
+
     private final Client client;
     private final HerbPatchPlugin plugin;
+    private final ModelOutlineRenderer modelOutlineRenderer;
 
     @Inject
     private HerbPatchConfig config;
 
     @Inject
-    private HerbPatchOverlay(Client client, HerbPatchPlugin plugin) {
+    private HerbPatchOverlay(Client client, HerbPatchPlugin plugin, ModelOutlineRenderer modelOutlineRenderer) {
         this.plugin = plugin;
         this.client = client;
+        this.modelOutlineRenderer = modelOutlineRenderer;
         setPosition(OverlayPosition.DYNAMIC);
         setPriority(OverlayPriority.LOW);
         setLayer(OverlayLayer.ABOVE_SCENE);
@@ -99,6 +105,9 @@ public class HerbPatchOverlay extends Overlay {
                 case TILE:
                     herb = Perspective.getCanvasTilePoly(client, herbLocation, object.getPlane());
                     break;
+                case OUTLINE:
+                    modelOutlineRenderer.drawOutline(object, OUTLINE_THICKNESS, color, OUTLINE_FEATHER);
+                    return;
                 case HULL:
                     herb = object.getConvexHull();
                     break;
