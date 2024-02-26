@@ -44,6 +44,7 @@ public class HerbPatchPlugin extends Plugin {
 
 	@Override
 	protected void shutDown() {
+		overlayManager.remove(herbOverlay);
 		herbPatchObject = null;
 	}
 
