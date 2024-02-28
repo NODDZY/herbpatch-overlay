@@ -19,7 +19,9 @@ import javax.inject.Inject;
 
 @Slf4j
 @PluginDescriptor(
-    name = "Herb Patch Overlay"
+    name = "Herb Patch Overlay",
+    description = "Renders colored overlays on herb patches depending on the state of growth",
+    tags = { "herblore", "farming", "timer" }
 )
 public class HerbPatchPlugin extends Plugin {
     @Inject private OverlayManager overlayManager;
