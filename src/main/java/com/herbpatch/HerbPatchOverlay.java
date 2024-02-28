@@ -9,7 +9,6 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
 import net.runelite.client.ui.overlay.OverlayPosition;
-import net.runelite.client.ui.overlay.OverlayPriority;
 import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
 
 import javax.inject.Inject;
@@ -28,6 +27,7 @@ public class HerbPatchOverlay extends Overlay {
     private static final int FILL_ALPHA = 20;
     private static final int OUTLINE_THICKNESS = 5;
     private static final int OUTLINE_FEATHER = 4;
+    private static final int OVERLAY_PRIORITY = 0;
 
     private final Client client;
     private final HerbPatchPlugin plugin;
@@ -41,7 +41,7 @@ public class HerbPatchOverlay extends Overlay {
         this.client = client;
         this.modelOutlineRenderer = modelOutlineRenderer;
         setPosition(OverlayPosition.DYNAMIC);
-        setPriority(OverlayPriority.LOW);
+        setPriority(OVERLAY_PRIORITY);
         setLayer(OverlayLayer.ABOVE_SCENE);
     }
 
