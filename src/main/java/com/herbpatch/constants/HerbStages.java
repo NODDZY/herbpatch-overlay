@@ -12,7 +12,7 @@ import java.util.Arrays;
  * @see <a href="https://oldschool.runescape.wiki/w/Property:Variable_index">Varbit index</a>
  */
 @Slf4j
-public enum HerbPatchStages {
+public enum HerbStages {
     OVERGROWN(0, 1, 2),
     EMPTY(3),
     GROWN(8,9,10,15,16,17,22,23,24,29,30,31,36,37,38,43,44,45,50,51,52,57,58,59,72,73,74,79,80,81,86,87,88,93,94,95,100,101,102,107,108,109),
@@ -22,7 +22,7 @@ public enum HerbPatchStages {
 
     private final int[] numbers;
 
-    HerbPatchStages(int... numbers) {
+    HerbStages(int... numbers) {
         this.numbers = numbers;
     }
 
@@ -39,14 +39,14 @@ public enum HerbPatchStages {
      * @param number The varbit number
      * @return The corresponding enum
      */
-    public static HerbPatchStages getHerbStage(int number) {
-        for (HerbPatchStages stage : HerbPatchStages.values()) {
+    public static HerbStages getHerbStage(int number) {
+        for (HerbStages stage : HerbStages.values()) {
             if (stage.contains(number)) {
-                log.trace("Herb [" + number + "] is " + stage);
+                log.trace("Herb [{}] is {}", number, stage);
                 return stage;
             }
         }
-        log.trace("Herb [" + number + "] is " + GROWING);
+        log.trace("Herb [{}] is {}", number, GROWING);
         return GROWING;
     }
 }

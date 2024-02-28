@@ -1,17 +1,22 @@
 package com.herbpatch;
 
-import com.herbpatch.constants.HerbPatchConstants;
-import com.herbpatch.constants.HerbPatchStages;
-import net.runelite.api.*;
+import com.herbpatch.constants.HerbStages;
+import net.runelite.api.Client;
+import net.runelite.api.GameObject;
+import net.runelite.api.Perspective;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
-import net.runelite.client.ui.overlay.*;
+import net.runelite.client.ui.overlay.Overlay;
+import net.runelite.client.ui.overlay.OverlayLayer;
+import net.runelite.client.ui.overlay.OverlayPosition;
+import net.runelite.client.ui.overlay.OverlayPriority;
 import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
 
 import javax.inject.Inject;
 import java.awt.*;
 import java.util.Objects;
 
+import static com.herbpatch.constants.HerbPatch.*;
 // Transmog controllers for various farming patches
 import static net.runelite.api.Varbits.FARMING_4771; // Troll Stronghold, Weiss
 import static net.runelite.api.Varbits.FARMING_4772; // Harmony Island
@@ -28,8 +33,7 @@ public class HerbPatchOverlay extends Overlay {
     private final HerbPatchPlugin plugin;
     private final ModelOutlineRenderer modelOutlineRenderer;
 
-    @Inject
-    private HerbPatchConfig config;
+    @Inject private HerbPatchConfig config;
 
     @Inject
     private HerbPatchOverlay(Client client, HerbPatchPlugin plugin, ModelOutlineRenderer modelOutlineRenderer) {
@@ -51,21 +55,21 @@ public class HerbPatchOverlay extends Overlay {
 
         // Switch to see what patch is rendered as some patches uses different transmog controllers
         switch (patchObject.getId()) {
-            case HerbPatchConstants.FALADOR:
-            case HerbPatchConstants.PHASMATYS:
-            case HerbPatchConstants.CATHERBY:
-            case HerbPatchConstants.ARDOUGNE:
-            case HerbPatchConstants.HOSIDIUS:
+            case FALADOR:
+            case PHASMATYS:
+            case CATHERBY:
+            case ARDOUGNE:
+            case HOSIDIUS:
                 state = client.getVarbitValue(FARMING_4774);
                 break;
-            case HerbPatchConstants.STRONGHOLD:
-            case HerbPatchConstants.WEISS:
+            case STRONGHOLD:
+            case WEISS:
                 state = client.getVarbitValue(FARMING_4771);
                 break;
-            case HerbPatchConstants.GUILD:
+            case GUILD:
                 state = client.getVarbitValue(FARMING_4775);
                 break;
-            case HerbPatchConstants.HARMONY:
+            case HARMONY:
                 state = client.getVarbitValue(FARMING_4772);
                 break;
             default:
@@ -137,10 +141,10 @@ public class HerbPatchOverlay extends Overlay {
      * Get the appropriate color based on herb state.
      * @param state The server controlled integer representing the state of the herb
      * @return The color to render the overlay
-     * @see HerbPatchStages
+     * @see HerbStages
      */
     private Color getHerbOverlayColor(int state) {
-        switch (HerbPatchStages.getHerbStage(state)) {
+        switch (HerbStages.getHerbStage(state)) {
             case OVERGROWN:
                 if (config.renderIfOvergrown()) {
                     return config.overgrownColor();

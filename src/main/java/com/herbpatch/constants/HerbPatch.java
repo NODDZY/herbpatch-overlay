@@ -6,9 +6,9 @@ import java.util.List;
 import static net.runelite.api.NullObjectID.*;
 
 /**
- * Class containing constants like ObjectIDs for the various herb patches around Gilenor.
+ * Class containing ObjectIDs for the various herb patches around Gilenor
  */
-public class HerbPatchConstants {
+public class HerbPatch {
     public static final int FALADOR     = NULL_8150;
     public static final int PHASMATYS   = NULL_8153;
     public static final int CATHERBY    = NULL_8151;

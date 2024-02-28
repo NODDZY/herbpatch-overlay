@@ -8,8 +8,10 @@ import net.runelite.client.config.ConfigSection;
 
 import java.awt.*;
 
-@ConfigGroup("herbpatch-overlay")
+@ConfigGroup(HerbPatchConfig.CONFIG_GROUP)
 public interface HerbPatchConfig extends Config {
+    String CONFIG_GROUP = "herbpatchoverlay";
+
     @AllArgsConstructor
     enum OverlayType {
         HULL("Hull"),

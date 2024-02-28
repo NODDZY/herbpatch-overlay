@@ -1,7 +1,7 @@
 package com.herbpatch;
 
 import com.google.inject.Provides;
-import com.herbpatch.constants.HerbPatchConstants;
+import com.herbpatch.constants.HerbPatch;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,52 +19,49 @@ import javax.inject.Inject;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Herb Patch Overlay"
+    name = "Herb Patch Overlay"
 )
 public class HerbPatchPlugin extends Plugin {
-	@Inject
-	private OverlayManager overlayManager;
+    @Inject private OverlayManager overlayManager;
+    @Inject private HerbPatchOverlay herbOverlay;
 
-	@Inject
-	private HerbPatchOverlay herbOverlay;
+    @Getter(AccessLevel.PACKAGE)
+    private GameObject herbPatchObject;
 
-	@Getter(AccessLevel.PACKAGE)
-	private GameObject herbPatchObject;
+    @Provides
+    HerbPatchConfig provideConfig(ConfigManager configManager) {
+        return configManager.getConfig(HerbPatchConfig.class);
+    }
 
-	@Provides
-	HerbPatchConfig provideConfig(ConfigManager configManager) {
-		return configManager.getConfig(HerbPatchConfig.class);
-	}
+    @Override
+    protected void startUp() {
+        // Add HerbPatchOverlay to OverlayManager at start up
+        overlayManager.add(herbOverlay);
+    }
 
-	@Override
-	protected void startUp() {
-		// Add HerbPatchOverlay to OverlayManager at start up
-		overlayManager.add(herbOverlay);
-	}
+    @Override
+    protected void shutDown() {
+        overlayManager.remove(herbOverlay);
+        herbPatchObject = null;
+    }
 
-	@Override
-	protected void shutDown() {
-		overlayManager.remove(herbOverlay);
-		herbPatchObject = null;
-	}
+    @Subscribe
+    public void onGameObjectSpawned(GameObjectSpawned event) {
+        // Check if any spawned objects are herbs/patches
+        for (int id : HerbPatch.allHerbObjects) {
+            if (id == event.getGameObject().getId()) {
+                herbPatchObject = event.getGameObject();
+                log.debug("Herb patch [{}] spawned", herbPatchObject.getId());
+                break;
+            }
+        }
+    }
 
-	@Subscribe
-	public void onGameObjectSpawned(GameObjectSpawned event) {
-		// Check if any spawned objects are herbs/patches
-		for (int id : HerbPatchConstants.allHerbObjects) {
-			if (id == event.getGameObject().getId()) {
-				herbPatchObject = event.getGameObject();
-				log.debug("Herb patch [" + herbPatchObject.getId() + "] spawned");
-				break;
-			}
-		}
-	}
-
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged event) {
-		// When changing state (e.g. teleporting) clear herb object
-		if (event.getGameState() == GameState.LOADING) {
-			herbPatchObject = null;
-		}
-	}
+    @Subscribe
+    public void onGameStateChanged(GameStateChanged event) {
+        // When changing state (e.g. teleporting) clear herb object
+        if (event.getGameState() == GameState.LOADING) {
+            herbPatchObject = null;
+        }
+    }
 }
