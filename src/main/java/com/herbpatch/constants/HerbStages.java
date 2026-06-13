@@ -8,8 +8,7 @@ import java.util.Arrays;
  * Enum representing stages of growth for herbs.
  * Each enum corresponds to a specific stage of growth and includes all varbit values associated with that stage.
  *
- * @see <a href="https://oldschool.runescape.wiki/w/RuneScape:Varbit">Wiki</a>
- * @see <a href="https://oldschool.runescape.wiki/w/Property:Variable_index">Varbit index</a>
+ * @see <a href="https://oldschool.runescape.wiki/w/Bucket:Varbit">Varbit index</a>
  */
 @Slf4j
 public enum HerbStages {
