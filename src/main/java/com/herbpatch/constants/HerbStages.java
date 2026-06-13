@@ -2,7 +2,9 @@ package com.herbpatch.constants;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Enum representing stages of growth for herbs.
@@ -19,18 +21,22 @@ public enum HerbStages {
     DEAD(170,171,172),
     GROWING;
 
+    // Build HashMap for lookups during rendering
+    private static final Map<Integer, HerbStages> BY_STATE;
+    static {
+        Map<Integer, HerbStages> map = new HashMap<>();
+        for (HerbStages stage : values()) {
+            for (int n : stage.numbers) {
+                map.put(n, stage);
+            }
+        }
+        BY_STATE = Collections.unmodifiableMap(map);
+    }
+
     private final int[] numbers;
 
     HerbStages(int... numbers) {
         this.numbers = numbers;
-    }
-
-    /**
-     * Checks if given varbit value is a part of this stage of growth
-     * @param number State of herb object
-     */
-    public boolean contains(int number) {
-        return Arrays.stream(numbers).anyMatch(n -> n == number);
     }
 
     /**
@@ -39,13 +45,6 @@ public enum HerbStages {
      * @return The corresponding enum
      */
     public static HerbStages getHerbStage(int number) {
-        for (HerbStages stage : HerbStages.values()) {
-            if (stage.contains(number)) {
-                log.trace("Herb [{}] is {}", number, stage);
-                return stage;
-            }
-        }
-        log.trace("Herb [{}] is {}", number, GROWING);
-        return GROWING;
+        return BY_STATE.getOrDefault(number, GROWING);
     }
 }
