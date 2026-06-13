@@ -18,7 +18,8 @@ public class HerbPatch {
     public static final int HARMONY     = NULL_9372;
     public static final int WEISS       = NULL_33313;
     public static final int GUILD       = NULL_33979;
+    public static final int VARLAMORE   = NULL_50697;
 
-    public static final List<Integer> allHerbObjects = Arrays.asList(FALADOR, PHASMATYS, CATHERBY, ARDOUGNE, HOSIDIUS, STRONGHOLD, HARMONY, WEISS, GUILD);
+    public static final List<Integer> allHerbObjects = Arrays.asList(FALADOR, PHASMATYS, CATHERBY, ARDOUGNE, HOSIDIUS, STRONGHOLD, HARMONY, WEISS, GUILD, VARLAMORE);
 }
 

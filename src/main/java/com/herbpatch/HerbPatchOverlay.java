@@ -19,7 +19,7 @@ import static com.herbpatch.constants.HerbPatch.*;
 // Transmog controllers for various farming patches
 import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_A; // Troll Stronghold, Weiss
 import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_B; // Harmony Island
-import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_D; // Falador, Port Phasmatys, Hosidius, Ardougne, Catherby
+import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_D; // Falador, Port Phasmatys, Hosidius, Ardougne, Catherby, Varlamore
 import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_E; // Farming Guild
 
 public class HerbPatchOverlay extends Overlay {
@@ -57,6 +57,7 @@ public class HerbPatchOverlay extends Overlay {
             case CATHERBY:
             case ARDOUGNE:
             case HOSIDIUS:
+            case VARLAMORE:
                 state = client.getVarbitValue(FARMING_TRANSMIT_D);
                 break;
             case STRONGHOLD:
