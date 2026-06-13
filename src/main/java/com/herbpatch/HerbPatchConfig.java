@@ -42,10 +42,51 @@ public interface HerbPatchConfig extends Config {
         return true;
     }
 
+
+    @ConfigSection(
+        name = "Render Options",
+        description = "Options relating to rendering",
+        position = 200
+    )
+    String renderOptionsSection = "optionsOutline";
+
+    @ConfigItem(
+        keyName = "outlineThickness",
+        name = "Outline Thickness",
+        description = "Outline thickness for overlay type Outline",
+        section = renderOptionsSection,
+        position = 201
+    )
+    default int outlineThickness() {
+        return 2;
+    }
+
+    @ConfigItem(
+        keyName = "outlineFeather",
+        name = "Outline Feather",
+        description = "Outline feather for overlay type Outline",
+        section = renderOptionsSection,
+        position = 202
+    )
+    default int outlineFeather() {
+        return 0;
+    }
+
+    @ConfigItem(
+        keyName = "fillAlpha",
+        name = "Hull/Tile Fill Alpha",
+        description = "Fill alpha for overlay type Hull and Tile",
+        section = renderOptionsSection,
+        position = 203
+    )
+    default int fillAlpha() {
+        return 10;
+    }
+
     @ConfigSection(
             name = "Herb Overlay Color",
             description = "Custom overlay colors for herbs",
-            position = 200
+            position = 300
     )
     String customColorSection = "customColor";
 
@@ -54,7 +95,7 @@ public interface HerbPatchConfig extends Config {
             name = "Overgrown",
             description = "",
             section = customColorSection,
-            position = 201
+            position = 301
     )
     default Color overgrownColor() {
         return Color.RED;
@@ -65,7 +106,7 @@ public interface HerbPatchConfig extends Config {
             name = "Empty",
             description = "",
             section = customColorSection,
-            position = 202
+            position = 302
     )
     default Color emptyColor() {
         return Color.RED;
@@ -76,7 +117,7 @@ public interface HerbPatchConfig extends Config {
             name = "Unripe",
             description = "",
             section = customColorSection,
-            position = 203
+            position = 303
     )
     default Color unripeColor() {
         return Color.YELLOW;
@@ -87,7 +128,7 @@ public interface HerbPatchConfig extends Config {
             name = "Mature",
             description = "",
             section = customColorSection,
-            position = 204
+            position = 304
     )
     default Color matureColor() {
         return Color.GREEN;
@@ -98,7 +139,7 @@ public interface HerbPatchConfig extends Config {
             name = "Diseased",
             description = "",
             section = customColorSection,
-            position = 205
+            position = 305
     )
     default Color diseasedColor() {
         return Color.MAGENTA;
@@ -109,7 +150,7 @@ public interface HerbPatchConfig extends Config {
             name = "Dead",
             description = "",
             section = customColorSection,
-            position = 206
+            position = 306
     )
     default Color deadColor() {
         return Color.RED;

@@ -24,9 +24,6 @@ import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_E; // Farming G
 
 public class HerbPatchOverlay extends Overlay {
     private static final int MAX_DISTANCE = 2500;
-    private static final int FILL_ALPHA = 20;
-    private static final int OUTLINE_THICKNESS = 5;
-    private static final int OUTLINE_FEATHER = 4;
     private static final int OVERLAY_PRIORITY = 0;
 
     private final Client client;
@@ -110,7 +107,7 @@ public class HerbPatchOverlay extends Overlay {
                     herb = Perspective.getCanvasTilePoly(client, herbLocation, object.getPlane());
                     break;
                 case OUTLINE:
-                    modelOutlineRenderer.drawOutline(object, OUTLINE_THICKNESS, color, OUTLINE_FEATHER);
+                    modelOutlineRenderer.drawOutline(object, config.outlineThickness(), color, config.outlineFeather());
                     return;
                 case HULL:
                     herb = object.getConvexHull();
@@ -131,7 +128,7 @@ public class HerbPatchOverlay extends Overlay {
 
                 // Render overlay
                 graphics.draw(herb);
-                graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), FILL_ALPHA));
+                graphics.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), config.fillAlpha()));
                 graphics.fill(herb);
             }
         }
