@@ -1,5 +1,6 @@
 package com.herbpatch;
 
+import com.herbpatch.constants.HerbPatch;
 import com.herbpatch.constants.HerbStages;
 import net.runelite.api.Client;
 import net.runelite.api.GameObject;
@@ -14,13 +15,6 @@ import net.runelite.client.ui.overlay.outline.ModelOutlineRenderer;
 import javax.inject.Inject;
 import java.awt.*;
 import java.util.Objects;
-
-import static com.herbpatch.constants.HerbPatch.*;
-// Transmog controllers for various farming patches
-import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_A; // Troll Stronghold, Weiss
-import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_B; // Harmony Island
-import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_D; // Falador, Port Phasmatys, Hosidius, Ardougne, Catherby, Varlamore
-import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_E; // Farming Guild
 
 public class HerbPatchOverlay extends Overlay {
     private static final int MAX_DISTANCE = 2500;
@@ -48,31 +42,11 @@ public class HerbPatchOverlay extends Overlay {
         if (Objects.isNull(patchObject)) {
             return null;
         }
-        int state = -1;
 
-        // Switch to see what patch is rendered as some patches uses different transmog controllers
-        switch (patchObject.getId()) {
-            case FALADOR:
-            case PHASMATYS:
-            case CATHERBY:
-            case ARDOUGNE:
-            case HOSIDIUS:
-            case VARLAMORE:
-                state = client.getVarbitValue(FARMING_TRANSMIT_D);
-                break;
-            case STRONGHOLD:
-            case WEISS:
-                state = client.getVarbitValue(FARMING_TRANSMIT_A);
-                break;
-            case GUILD:
-                state = client.getVarbitValue(FARMING_TRANSMIT_E);
-                break;
-            case HARMONY:
-                state = client.getVarbitValue(FARMING_TRANSMIT_B);
-                break;
-            default:
-                break;
-        }
+        HerbPatch patch = HerbPatch.byObjectId(patchObject.getId());
+        if (patch == null) return null;
+
+        int state = client.getVarbitValue(patch.varbit);
 
         // If state is not default and user wants to render for current state -> render overlay
         if (state != -1) {

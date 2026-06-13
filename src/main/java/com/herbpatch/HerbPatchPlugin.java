@@ -49,14 +49,11 @@ public class HerbPatchPlugin extends Plugin {
 
     @Subscribe
     public void onGameObjectSpawned(GameObjectSpawned event) {
-        // Check if any spawned objects are herbs/patches
-        for (int id : HerbPatch.allHerbObjects) {
-            if (id == event.getGameObject().getId()) {
-                herbPatchObject = event.getGameObject();
-                log.debug("Herb patch [{}] spawned", herbPatchObject.getId());
-                break;
-            }
-        }
+        HerbPatch patch = HerbPatch.byObjectId(event.getGameObject().getId());
+        if (patch == null) return;
+
+        herbPatchObject = event.getGameObject();
+        log.debug("Herb patch [{}] spawned", herbPatchObject.getId());
     }
 
     @Subscribe
