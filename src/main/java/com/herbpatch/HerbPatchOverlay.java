@@ -17,10 +17,10 @@ import java.util.Objects;
 
 import static com.herbpatch.constants.HerbPatch.*;
 // Transmog controllers for various farming patches
-import static net.runelite.api.Varbits.FARMING_4771; // Troll Stronghold, Weiss
-import static net.runelite.api.Varbits.FARMING_4772; // Harmony Island
-import static net.runelite.api.Varbits.FARMING_4774; // Falador, Port Phasmatys, Hosidius, Ardougne, Catherby
-import static net.runelite.api.Varbits.FARMING_4775; // Farming Guild
+import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_A; // Troll Stronghold, Weiss
+import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_B; // Harmony Island
+import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_D; // Falador, Port Phasmatys, Hosidius, Ardougne, Catherby
+import static net.runelite.api.gameval.VarbitID.FARMING_TRANSMIT_E; // Farming Guild
 
 public class HerbPatchOverlay extends Overlay {
     private static final int MAX_DISTANCE = 2500;
@@ -60,17 +60,17 @@ public class HerbPatchOverlay extends Overlay {
             case CATHERBY:
             case ARDOUGNE:
             case HOSIDIUS:
-                state = client.getVarbitValue(FARMING_4774);
+                state = client.getVarbitValue(FARMING_TRANSMIT_D);
                 break;
             case STRONGHOLD:
             case WEISS:
-                state = client.getVarbitValue(FARMING_4771);
+                state = client.getVarbitValue(FARMING_TRANSMIT_A);
                 break;
             case GUILD:
-                state = client.getVarbitValue(FARMING_4775);
+                state = client.getVarbitValue(FARMING_TRANSMIT_E);
                 break;
             case HARMONY:
-                state = client.getVarbitValue(FARMING_4772);
+                state = client.getVarbitValue(FARMING_TRANSMIT_B);
                 break;
             default:
                 break;
