@@ -1,22 +1,23 @@
 # Herb Patch Overlay
 
-Renders colored overlays on herb patches depending on the state of growth.
+Renders colored overlays on herb patches depending on the current state.
 
-This plugin is designed for use within the open-source OSRS client [RuneLite](https://runelite.net/).
-To install the plugin, start up the RuneLite client and search for the _Visual NPC Dialogue_ plugin in the Plugin Hub.
-Detailed instructions can be found on the [RuneLite wiki](https://github.com/runelite/runelite/wiki/Information-about-the-Plugin-Hub).
+### Configuration
 
-## Configuration
+Settings are found in the RuneLite plugin configuration panel.
 
-Plugin settings are found in the RuneLite plugin configuration panel.
+| State            | Default color     |
+|------------------|-------------------|
+| Overgrown        | `#FF0000` - Red     |
+| Empty            | `#FF0000` - Red     |
+| Growing (unripe) | `#FFFF00` - Yellow  |
+| Grown (mature)   | `#00FF00` - Green   |
+| Diseased         | `#FF00FF` - Magenta |
+| Dead             | `#FF0000` - Red     |
 
-#### Default colors:
+### About
 
-| Herb      |    Hex    |                        Color                         |
-|:----------|:---------:|:----------------------------------------------------:|
-| Overgrown | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
-| Empty     | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
-| Unripe    | `#FFFF00` | ![#FFFF00](https://placehold.co/15x15/FFFF00/FFFF00) |
-| Mature    | `#00FF00` | ![#00FF00](https://placehold.co/15x15/00FF00/00FF00) |
-| Diseased  | `#FF00FF` | ![#FF00FF](https://placehold.co/15x15/FF00FF/FF00FF) |
-| Dead      | `#FF0000` | ![#FF0000](https://placehold.co/15x15/FF0000/FF0000) |
+Herb Patch Overlay is an open-source plugin for [RuneLite](https://runelite.net/). It is distributed under the [BSD 2-Clause License](LICENSE).
+
+To install the plugin, open the RuneLite client and search for '**Herb Patch Overlay**' in the Plugin Hub. \
+For more information about installing plugins, see the [RuneLite wiki](https://github.com/runelite/runelite/wiki/Information-about-the-Plugin-Hub).
