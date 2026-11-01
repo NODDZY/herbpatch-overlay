@@ -2,12 +2,14 @@
 
 Renders colored overlays on herb patches depending on the current state.
 
+![](https://raw.githubusercontent.com/NODDZY/herbpatch-overlay/master/.github/assets/example.gif)
+
 ### Configuration
 
-Settings are found in the RuneLite plugin configuration panel.
+Settings are found in the RuneLite plugin configuration panel
 
-| State            | Default color     |
-|------------------|-------------------|
+| State            | Default color       |
+|------------------|---------------------|
 | Overgrown        | `#FF0000` - Red     |
 | Empty            | `#FF0000` - Red     |
 | Growing (unripe) | `#FFFF00` - Yellow  |
